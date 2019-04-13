@@ -28,7 +28,7 @@ module.exports = createReactClass({
   render: function() {
     var results = this.props.rows
 
-    var paginatedResults = this.paginate(results)
+    var paginatedResults = this.paginate(results, this.props.columns)
 
     var tBody = this.renderTableBody(this.props.columns, paginatedResults.rows)
     var tHead = this.renderTableHead(this.props.columns)
@@ -157,7 +157,7 @@ module.exports = createReactClass({
     )
   },
 
-  paginate: function(results) {
+  paginate: function(results, columns) {
     if (results.length <= 0) return {rows: results, nPages: 1, curPage: 0}
 
     var paginatePage = this.state.paginatePage
@@ -171,6 +171,23 @@ module.exports = createReactClass({
 
     var boundaryLevel = results[iBoundaryRow]._level
     var parentRows = []
+
+    //////////////////
+    let filteredColumns = [];
+    for (let i = 0; i < columns.length -1; i++) {
+      filteredColumns.push(columns[i].value);
+    }
+
+    for (let i = 0; i < results.length; i++){
+      for (let j = 0; j < filteredColumns.length; j++){
+        if (!results[i].hasOwnProperty(filteredColumns[j]))
+          results[i][filteredColumns[j]] = 'Total';
+        if (results[i][filteredColumns[j]] === '')
+          results[i][filteredColumns[j]] = 'None';
+      }
+    }
+    //////////////////
+
     if (boundaryLevel > 0) {
       for (var i = iBoundaryRow-1; i >= 0; i--) {
         if (results[i]._level < boundaryLevel) {
