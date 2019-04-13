@@ -182,8 +182,10 @@ module.exports = createReactClass({
       for (let j = 0; j < filteredColumns.length; j++){
         if (!results[i].hasOwnProperty(filteredColumns[j]))
           results[i][filteredColumns[j]] = 'Total';
-        if (results[i][filteredColumns[j]] === '')
-          results[i][filteredColumns[j]] = 'None';
+        if (results[i][filteredColumns[j]] === '') {
+          results.splice(i, 1);
+          i--;
+        }
       }
     }
     //////////////////
