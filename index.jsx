@@ -36,7 +36,7 @@ module.exports = createReactClass({
       compact: false,
       excludeSummaryFromExport: false,
       onData: function () {},
-      soloText: "solo",
+      soloText: "only",
       subDimensionText: "Sub Dimension..."
     }
   },
