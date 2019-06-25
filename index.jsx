@@ -36,6 +36,7 @@ module.exports = createReactClass({
       compact: false,
       excludeSummaryFromExport: false,
       onData: function () {},
+      onSelectValue: function() {},
       soloText: "only",
       subDimensionText: "Sub Dimension..."
     }
@@ -203,6 +204,7 @@ module.exports = createReactClass({
     }
 
     var rows = this.dataFrame.calculate(calcOpts)
+    this.props.onSelectValue(this.state.dimensions);
     this.setState({rows: rows})
     this.props.onData(rows)
   },
